@@ -30,7 +30,7 @@ IPS[$i]=$i\:${IPS[$i]}\:${POSTGRES_PORT}\:\1\:${PGDATA}\:ALLOW_TO_FAILOVER
 done
 
 
-BACKENDS=\"$(echo ${IPS[@]} | tr " " ",")\"
+BACKENDS="$(echo ${IPS[@]} | tr " " ",")"
 export BACKENDS
 
 [[ $PAUSE ]] && sleep $PAUSE
