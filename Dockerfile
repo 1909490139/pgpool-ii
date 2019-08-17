@@ -1,7 +1,7 @@
 FROM postdock/pgpool:latest-pgpool36-postgres10
 
 RUN apt-get update && \
-    apt-get install -y bindutils && \
+    apt-get install -y dnsutils && \
     apt-get clean && \
     rm -rf /var/cache/apt
 
