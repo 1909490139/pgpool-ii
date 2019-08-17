@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -e
 
 export CONFIG_FILE='/usr/local/etc/pgpool.conf'
