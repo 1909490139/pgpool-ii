@@ -33,8 +33,6 @@ done
 BACKENDS=\"$(echo ${IPS[@]} | tr " " ",")\"
 export BACKENDS
 
-/var/pgpool_configs/pgpool.conf
-
 echo '>>> TURNING PGPOOL...'
 /usr/local/bin/pgpool/pgpool_setup.sh
 
