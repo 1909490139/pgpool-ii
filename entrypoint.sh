@@ -37,15 +37,23 @@ case ${PGPOLL_MODE} in
 REPLICATION)
         echo '>>> CONFIG WORK MODE : REPLICATION MODE...'
         sed -i -r -e "s/replication_mode = off/replication_mode = on/g" \
-                  -e "s/master_slave_mode = on/master_slave_mode = off/g" /var/pgpool_configs/pgpool.conf
+                  -e "s/master_slave_mode = on/master_slave_mode = off/g" \
+                  -e "s/health_check_user = 'replication_user'/health_check_user = \'${POSTGRES_USER}\'/g" \
+                  -e "s/health_check_password = 'replication_pass'/health_check_password = \'${POSTGRES_PASSWORD}\'/g"/var/pgpool_configs/pgpool.conf
         ;;
 PARALLEL) 
         echo '>>> CONFIG WORK MODE : PARALLEL MODE...'
         sed -i -r -e "s/parallel_mode = off/parallel_mode = on/g" \
-                  -e "s/master_slave_mode = on/master_slave_mode = off/g" /var/pgpool_configs/pgpool.conf
+                  -e "s/master_slave_mode = on/master_slave_mode = off/g" 
+                  -e "s/health_check_user = 'replication_user'/health_check_user = \'${POSTGRES_USER}\'/g" \
+                  -e "s/health_check_password = 'replication_pass'/health_check_password = \'${POSTGRES_PASSWORD}\'/g" /var/pgpool_configs/pgpool.conf
         ;;
 *)
         echo '>>> CONFIG WORK MODE : MASTER/SLAVE MODE...'
+        sed -i -r -e "s/#sr_check_user = 'replication_user'/sr_check_user = \'${POSTGRES_USER}\'/g" \
+                  -e "s/#sr_check_password = 'replication_pass'/sr_check_password = \'${POSTGRES_PASSWORD}\'/g"
+                  -e "s/health_check_user = 'replication_user'/health_check_user = \'${POSTGRES_USER}\'/g" \
+                  -e "s/health_check_password = 'replication_pass'/health_check_password = \'${POSTGRES_PASSWORD}\'/g"/var/pgpool_configs/pgpool.conf
         ;;
 esac
 
