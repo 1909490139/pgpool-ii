@@ -33,6 +33,22 @@ done
 BACKENDS="$(echo ${IPS[@]} | tr " " ",")"
 export BACKENDS
 
+case ${PGPOLL_MODE} in 
+REPLICATION)
+        echo '>>> CONFIG WORK MODE : REPLICATION MODE...'
+        sed -i -r -e "s/replication_mode = off/replication_mode = on/g" \
+                  -e "s/master_slave_mode = on/master_slave_mode = off/g" /var/pgpool_configs/pgpool.conf
+        ;;
+PARALLEL) 
+        echo '>>> CONFIG WORK MODE : PARALLEL MODE...'
+        sed -i -r -e "s/parallel_mode = off/parallel_mode = on/g" \
+                  -e "s/master_slave_mode = on/master_slave_mode = off/g" /var/pgpool_configs/pgpool.conf
+        ;;
+*)
+        echo '>>> CONFIG WORK MODE : MASTER/SLAVE MODE...'
+        ;;
+esac
+
 [[ $PAUSE ]] && sleep $PAUSE
 echo '>>> TURNING PGPOOL...'
 /usr/local/bin/pgpool/pgpool_setup.sh
